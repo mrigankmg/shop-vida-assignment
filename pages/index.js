@@ -80,7 +80,9 @@ const Home = ({ email, configuration, result }) => {
       <Head>
         <title>Food Quiz</title>
       </Head>
-      {!currQuestionConfig ? (
+      {isLoading ? (
+        <ClipLoader />
+      ) : !currQuestionConfig ? (
         currQuestionNum === 0 ? (
           <>
             <div className={styles["quiz-title"]}>Food Quiz</div>
@@ -95,8 +97,6 @@ const Home = ({ email, configuration, result }) => {
             Thanks for taking the quiz!
           </div>
         )
-      ) : isLoading ? (
-        <ClipLoader />
       ) : (
         <>
           <Question
