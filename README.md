@@ -1,4 +1,4 @@
-- Install node_modules:
+- Install dependencies:
 
 ```bash
 yarn install
