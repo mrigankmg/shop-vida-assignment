@@ -1,4 +1,4 @@
-import styles from "../../styles/Container.module.css";
+import styles from "styles/Container.module.css";
 
 const Container = ({ children, bgColor }) => {
   return (

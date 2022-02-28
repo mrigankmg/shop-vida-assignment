@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Button from "../components/ui/Button";
-import Container from "../components/ui/Container";
-import styles from "../styles/Home.module.css";
+import Button from "components/ui/Button";
+import Container from "components/ui/Container";
+import Question from "components/Question";
 import { useState, useEffect } from "react";
-import Question from "../components/Question";
-import { updateQuizResult, getQuizConfig } from "../api/quiz";
+import { updateQuizResult, getQuizConfig } from "api/quiz";
 import ClipLoader from "react-spinners/ClipLoader";
+import styles from "styles/Home.module.css";
 
 const Home = ({ email, configuration, result }) => {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,4 +1,4 @@
-import styles from "../styles/Question.module.css";
+import styles from "styles/Question.module.css";
 
 const Question = ({
   config,
