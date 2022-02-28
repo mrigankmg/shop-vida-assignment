@@ -1,7 +1,13 @@
-Run the development server:
+- Install node_modules:
+
+```bash
+yarn install
+```
+
+- Run the development server:
 
 ```bash
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser.
+- Open [http://localhost:3000](http://localhost:3000) with your browser.
