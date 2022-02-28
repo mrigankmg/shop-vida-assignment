@@ -1,0 +1,19 @@
+.button {
+  background: none;
+  border-block: 2px solid black;
+  border-inline: none;
+  padding: 15px;
+  min-width: 150px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 699px) {
+  .button {
+    width: 100%;
+  }
+}
