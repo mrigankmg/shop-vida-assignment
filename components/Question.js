@@ -17,7 +17,7 @@ const Question = ({
             name="answer"
             value={answer.id}
             checked={answer.id === selectedAnswerId}
-            onChange={() => onChange(answer.id, answer.nextQuestionId)}
+            onChange={() => onChange(answer)}
           />
           <label htmlFor={answer.id}>{answer.answer}</label>
         </div>

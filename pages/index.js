@@ -13,10 +13,7 @@ const Home = ({ email, configuration, result }) => {
   const [currQuestionConfig, setCurrQuestionConfig] = useState();
   const [currQuestionNum, setCurrQuestionNum] = useState(0);
   const [newResult, setNewResult] = useState(result);
-  const [nextQuestionId, setNextQuestionId] = useState(
-    configuration.firstQuestionId
-  );
-  const [selectedAnswerId, setSelectedAnswerId] = useState(null);
+  const [selectedAnswerConfig, setSelectedAnswerConfig] = useState();
 
   useEffect(() => {
     if (currQuestionConfig) {
@@ -24,51 +21,48 @@ const Home = ({ email, configuration, result }) => {
         (answer) => answer.questionId === currQuestionConfig.id
       )?.answerId;
       if (previouslySelectedAnswerId) {
-        setSelectedAnswerId(previouslySelectedAnswerId);
-        const _nextQuestionId = currQuestionConfig.answers.find(
+        const _selectedAnswerConfig = currQuestionConfig.answers.find(
           (answer) => answer.id === previouslySelectedAnswerId
-        ).nextQuestionId;
-        setNextQuestionId(_nextQuestionId);
+        );
+        setSelectedAnswerConfig(_selectedAnswerConfig);
       }
     }
   }, [currQuestionConfig]);
 
-  const getNextQuestionConfig = () => {
-    return configuration.questions.find(
-      (question) => question.id === nextQuestionId
-    );
+  const getQuestionConfig = (id) => {
+    return configuration.questions.find((question) => question.id === id);
   };
 
   const handleLetsGoButtonClick = () => {
-    setCurrQuestionConfig(getNextQuestionConfig());
+    setCurrQuestionConfig(getQuestionConfig(configuration.firstQuestionId));
     setCurrQuestionNum(1);
   };
 
-  const handleChangeSelectedAnswer = (answerId, nextQuestionId) => {
+  const handleChangeSelectedAnswer = (answerConfig) => {
     setDisplayError(false);
-    setSelectedAnswerId(answerId);
-    setNextQuestionId(nextQuestionId);
+    setSelectedAnswerConfig(answerConfig);
   };
 
   const handleNextButtonClick = async () => {
-    if (selectedAnswerId) {
+    if (selectedAnswerConfig) {
       const updatedResult = newResult.filter(
         (answer) => answer.questionId !== currQuestionConfig.id
       );
       updatedResult.push({
         questionId: currQuestionConfig.id,
-        answerId: selectedAnswerId,
+        answerId: selectedAnswerConfig.id,
       });
       setNewResult(updatedResult);
-      const nextQuestionConfig = getNextQuestionConfig();
+      const nextQuestionConfig = getQuestionConfig(
+        selectedAnswerConfig.nextQuestionId
+      );
       if (!nextQuestionConfig) {
         setIsLoading(true);
         await updateQuizResult({ email, configuration, result: updatedResult });
         setIsLoading(false);
       }
-      setSelectedAnswerId(null);
+      setSelectedAnswerConfig(null);
       setCurrQuestionConfig(nextQuestionConfig);
-      setNextQuestionId(null);
       setCurrQuestionNum(currQuestionNum + 1);
     } else {
       setDisplayError(true);
@@ -104,7 +98,7 @@ const Home = ({ email, configuration, result }) => {
             questionNum={currQuestionNum}
             onChange={handleChangeSelectedAnswer}
             displayError={displayError}
-            selectedAnswerId={selectedAnswerId}
+            selectedAnswerId={selectedAnswerConfig?.id}
           ></Question>
           <Button type="button" onClick={handleNextButtonClick} text="Next" />
         </>
